@@ -1,0 +1,20 @@
+# Quantum Obsidian — Default Maestro OS Theme
+# Deep dark theme with quantum-inspired accents
+
+[theme]
+name = "Quantum Obsidian"
+version = "1.0"
+
+[colors]
+primary = "#3b6cf5"
+accent = "#5b8af7"
+background = "#0a0f1e"
+surface = "#111827"
+border = "#1e293b"
+text = "#e2e8f0"
+text-secondary = "#94a3b8"
+
+[typography]
+font-family = "Inter"
+font-size-base = 14
+line-height = 1.5
