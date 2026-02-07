@@ -1,0 +1,9 @@
+[package]
+name = "salvi-boot"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bootloader = "0.11"
+uefi = "0.28"
+uefi-services = "0.25"
