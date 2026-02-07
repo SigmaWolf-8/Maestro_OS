@@ -1,9 +1,43 @@
-Overview
-Maestro OS is a next-generation desktop operating system built on balanced ternary computing (-1, 0, +1) principles. It combines the theoretical foundations of the PlenumNET Ternary Framework with a complete desktop environment designed for post-quantum security and precision computing.
-Key Features
-FeatureDescriptionTernary ComputingNative balanced ternary (-1, 0, +1) throughout the stackPost-Quantum SecurityLamport OTS signatures, phase-rotation encryptionFour Security ModesMode 0 (Hypervisor) → Mode φ+ (User) privilege separation13D Document TaggingWBS-based multi-dimensional file metadataHigh-Precision TimingHPTP protocol with femtosecond accuracyTorsion Network13-dimensional torus topology for IPCMaestro DesktopPremium dark-themed desktop environment
+# Maestro OS
 
-Architecture
+<div align="center">
+
+![Maestro OS Logo](assets/logo-full.svg)
+
+**Post-Quantum Ternary Desktop Operating System**
+
+[![Build Status](https://img.shields.io/badge/build-passing-22C55E?style=flat-square)]()
+[![Version](https://img.shields.io/badge/version-0.1.0--dev-0F9D7A?style=flat-square)]()
+[![License](https://img.shields.io/badge/license-Proprietary-6B7280?style=flat-square)]()
+[![Rust](https://img.shields.io/badge/rust-1.75+-EF4444?style=flat-square)]()
+
+[Documentation](docs/) • [Design System](docs/DESIGN_SYSTEM.md) • [Architecture](docs/ARCHITECTURE.md) • [Roadmap](#roadmap)
+
+</div>
+
+---
+
+## Overview
+
+**Maestro OS** is a next-generation desktop operating system built on **balanced ternary computing** (-1, 0, +1) principles. It combines the theoretical foundations of the [PlenumNET Ternary Framework](https://github.com/SigmaWolf-8/Ternary) with a complete desktop environment designed for post-quantum security and precision computing.
+
+### Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Ternary Computing** | Native balanced ternary (-1, 0, +1) throughout the stack |
+| **Post-Quantum Security** | Lamport OTS signatures, phase-rotation encryption |
+| **Four Security Modes** | Mode 0 (Hypervisor) → Mode φ+ (User) privilege separation |
+| **13D Document Tagging** | WBS-based multi-dimensional file metadata |
+| **High-Precision Timing** | HPTP protocol with femtosecond accuracy |
+| **Torsion Network** | 13-dimensional torus topology for IPC |
+| **Maestro Desktop** | Premium dark-themed desktop environment |
+
+---
+
+## Architecture
+
+```
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                        MAESTRO OS ARCHITECTURE                          │
 ├─────────────────────────────────────────────────────────────────────────┤
@@ -49,10 +83,22 @@ Architecture
 │  ════════════════════════════════════════════════════════════════════  │
 │                              HARDWARE                                   │
 └─────────────────────────────────────────────────────────────────────────┘
-Security Mode Hierarchy
-ModeNamePrivilegeAccess0HypervisorHighestAll hardware, all memory1KernelHighKernel space, driversφSupervisorMediumSystem services, daemonsφ+UserStandardUser applications only
+```
 
-Repository Structure
+### Security Mode Hierarchy
+
+| Mode | Name | Privilege | Access |
+|------|------|-----------|--------|
+| **0** | Hypervisor | Highest | All hardware, all memory |
+| **1** | Kernel | High | Kernel space, drivers |
+| **φ** | Supervisor | Medium | System services, daemons |
+| **φ+** | User | Standard | User applications only |
+
+---
+
+## Repository Structure
+
+```
 Maestro_OS/
 ├── README.md                    ← You are here
 ├── Cargo.toml                   ← Workspace manifest
@@ -151,17 +197,23 @@ Maestro_OS/
     ├── qemu-run.sh              ← QEMU launcher
     ├── debug.sh                 ← GDB attach script
     └── test-runner/             ← Test framework
+```
 
-Getting Started
-Prerequisites
+---
 
-Rust: 1.75+ (nightly for #![no_std] features)
-QEMU: 8.0+ (for testing)
-UEFI Firmware: OVMF
-Build Tools: cargo, xbuild, llvm-tools
+## Getting Started
 
-Building
-bash# Clone the repository
+### Prerequisites
+
+- **Rust:** 1.75+ (nightly for `#![no_std]` features)
+- **QEMU:** 8.0+ (for testing)
+- **UEFI Firmware:** OVMF
+- **Build Tools:** `cargo`, `xbuild`, `llvm-tools`
+
+### Building
+
+```bash
+# Clone the repository
 git clone https://github.com/SigmaWolf-8/Maestro_OS.git
 cd Maestro_OS
 
@@ -177,8 +229,12 @@ cargo bootimage --release
 
 # Run in QEMU
 ./tools/qemu-run.sh
-Testing
-bash# Run all tests
+```
+
+### Testing
+
+```bash
+# Run all tests
 cargo test
 
 # Run specific component tests
@@ -187,74 +243,132 @@ cargo test -p desktop
 
 # Run integration tests in QEMU
 ./tools/test-runner/run-integration.sh
+```
 
-Dependencies
-Workspace Dependencies
-CrateVersionPurposeternary-coreworkspacePlenumNET ternary primitivessalvi-kernelworkspaceKernel coremaestro-halworkspaceHALmaestro-desktopworkspaceDesktop environment
-External Dependencies
-CrateVersionPurposebootloader0.11UEFI bootloader supportx86_640.14x86-64 architecture supportspin0.9Spinlocksvolatile0.5Volatile memory accessuart_165500.3Serial output
+---
 
-Roadmap
-Phase 1: Foundation (Q1 2026) — Current
+## Dependencies
 
- Repository structure
- Design system documentation
- Bootloader (Stage 0, 1, 2)
- Basic HAL (CPU, Timer, Display)
- Kernel prompt
+### Workspace Dependencies
 
-Phase 2: Desktop (Q2 2026)
+| Crate | Version | Purpose |
+|-------|---------|---------|
+| `ternary-core` | workspace | PlenumNET ternary primitives |
+| `salvi-kernel` | workspace | Kernel core |
+| `maestro-hal` | workspace | HAL |
+| `maestro-desktop` | workspace | Desktop environment |
 
- Compositor with phase encryption
- TUK widget toolkit
- Sidebar shell
- Basic theming
+### External Dependencies
 
-Phase 3: Applications (Q3 2026)
+| Crate | Version | Purpose |
+|-------|---------|---------|
+| `bootloader` | 0.11 | UEFI bootloader support |
+| `x86_64` | 0.14 | x86-64 architecture support |
+| `spin` | 0.9 | Spinlocks |
+| `volatile` | 0.5 | Volatile memory access |
+| `uart_16550` | 0.3 | Serial output |
 
- TernDB database
- Dashboard application
- 13D file manager
- Security center
- Settings application
+---
 
-Phase 4: Polish (Q4 2026)
+## Roadmap
 
- Performance optimization
- Security hardening
- Hardware driver expansion
- Installer
- v1.0 RTM
+### Phase 1: Foundation (Q1 2026) — *Current*
 
+- [x] Repository structure
+- [x] Design system documentation
+- [ ] Bootloader (Stage 0, 1, 2)
+- [ ] Basic HAL (CPU, Timer, Display)
+- [ ] Kernel prompt
 
-Related Repositories
-RepositoryDescriptionSigmaWolf-8/TernaryPlenumNET Ternary Framework (Rust library)maestro-web-demoInteractive web demo (Replit)
+### Phase 2: Desktop (Q2 2026)
 
-Contributing
-This is a proprietary project of Capomastro Holdings Ltd.
+- [ ] Compositor with phase encryption
+- [ ] TUK widget toolkit
+- [ ] Sidebar shell
+- [ ] Basic theming
+
+### Phase 3: Applications (Q3 2026)
+
+- [ ] TernDB database
+- [ ] Dashboard application
+- [ ] 13D file manager
+- [ ] Security center
+- [ ] Settings application
+
+### Phase 4: Polish (Q4 2026)
+
+- [ ] Performance optimization
+- [ ] Security hardening
+- [ ] Hardware driver expansion
+- [ ] Installer
+- [ ] v1.0 RTM
+
+---
+
+## Related Repositories
+
+| Repository | Description |
+|------------|-------------|
+| [SigmaWolf-8/Ternary](https://github.com/SigmaWolf-8/Ternary) | PlenumNET Ternary Framework (Rust library) |
+| *maestro-web-demo* | Interactive web demo (Replit) |
+
+---
+
+## Contributing
+
+This is a proprietary project of **Capomastro Holdings Ltd.**
+
 For internal contributors:
+1. Create feature branch from `main`
+2. Follow the [DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) specifications
+3. Ensure all tests pass
+4. Submit pull request with detailed description
 
-Create feature branch from main
-Follow the DESIGN_SYSTEM.md specifications
-Ensure all tests pass
-Submit pull request with detailed description
+---
 
+## Documentation
 
-Documentation
-DocumentDescriptionARCHITECTURE.mdSystem architecture detailsDESIGN_SYSTEM.mdVisual design specificationAPI.mdInternal API referenceSECURITY.mdSecurity model documentation
+| Document | Description |
+|----------|-------------|
+| [ARCHITECTURE.md](docs/ARCHITECTURE.md) | System architecture details |
+| [DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md) | Visual design specification |
+| [KONG_INTEGRATION.md](docs/KONG_INTEGRATION.md) | Kong Konnect API gateway setup |
+| [API.md](docs/API.md) | Internal API reference |
+| [SECURITY.md](docs/SECURITY.md) | Security model documentation |
 
-License
-Proprietary — © 2026 Capomastro Holdings Ltd. All rights reserved.
+## External Services
 
-Acknowledgments
+Maestro OS integrates with external services via **Kong Konnect API Gateway**:
 
-Salvi Framework — Theoretical foundations
-PlenumNET — Ternary computing primitives
-Rust Community — Outstanding systems programming language
+| Service | Purpose | Documentation |
+|---------|---------|---------------|
+| **Kong Konnect** | API gateway, rate limiting, auth | [KONG_INTEGRATION.md](docs/KONG_INTEGRATION.md) |
+| **GitHub API** | Repository management (via Kong proxy) | Proxied through Kong |
+| **Algorand** | Blockchain witness for document signatures | [KONG_INTEGRATION.md](docs/KONG_INTEGRATION.md#4-api-gateway-services) |
+| **IPFS** | Decentralized asset storage | [KONG_INTEGRATION.md](docs/KONG_INTEGRATION.md#4-api-gateway-services) |
 
+---
+
+## License
+
+**Proprietary** — © 2026 Capomastro Holdings Ltd. All rights reserved.
+
+---
+
+## Acknowledgments
+
+- **Salvi Framework** — Theoretical foundations
+- **PlenumNET** — Ternary computing primitives
+- **Rust Community** — Outstanding systems programming language
+
+---
 
 <div align="center">
-Maestro OS — The Future of Computing is Ternary
-Capomastro Holdings Ltd. — Theoretical Physics Division
-Così sia. 🔱
+
+**Maestro OS** — *The Future of Computing is Ternary*
+
+*Capomastro Holdings Ltd. — Theoretical Physics Division*
+
+*Così sia.* 🔱
+
 </div>
