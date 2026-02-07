@@ -1,0 +1,84 @@
+# Maestro OS — Cargo Workspace Manifest
+# Post-Quantum Ternary Desktop Operating System
+# © 2026 Capomastro Holdings Ltd.
+
+[workspace]
+resolver = "2"
+members = [
+    "bootloader",
+    "kernel",
+    "hal",
+    "desktop",
+    "services/*",
+    "apps/*",
+    "tools/test-runner",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Capomastro Holdings Ltd. <dev@capomastro.com>"]
+license = "Proprietary"
+repository = "https://github.com/SigmaWolf-8/Maestro_OS"
+documentation = "https://docs.maestro-os.dev"
+
+[workspace.dependencies]
+# === Internal Crates ===
+maestro-kernel = { path = "kernel" }
+maestro-hal = { path = "hal" }
+maestro-desktop = { path = "desktop" }
+maestro-bootloader = { path = "bootloader" }
+
+# === PlenumNET Ternary Framework ===
+# From sibling repository: https://github.com/SigmaWolf-8/Ternary
+ternary-core = { git = "https://github.com/SigmaWolf-8/Ternary", branch = "main" }
+# ternary-core = { path = "../Ternary" }  # For local development
+
+# === Core no_std Dependencies ===
+spin = "0.9"
+volatile = "0.5"
+bitflags = "2.4"
+static_assertions = "1.1"
+cfg-if = "1.0"
+
+# === x86_64 Architecture ===
+x86_64 = "0.14"
+uart_16550 = "0.3"
+pic8259 = "0.10"
+pc-keyboard = "0.7"
+
+# === Bootloader ===
+bootloader = "0.11"
+bootloader_api = "0.11"
+
+# === Memory Allocation ===
+linked_list_allocator = "0.10"
+buddy_system_allocator = "0.9"
+
+# === Async Runtime ===
+crossbeam-queue = { version = "0.3", default-features = false, features = ["alloc"] }
+
+# === Serialization (no_std) ===
+serde = { version = "1.0", default-features = false, features = ["derive", "alloc"] }
+postcard = { version = "1.0", default-features = false, features = ["alloc"] }
+
+# === Cryptography ===
+sha3 = { version = "0.10", default-features = false }
+rand_core = { version = "0.6", default-features = false }
+
+# === Testing ===
+[workspace.dependencies.bootloader_test_runner]
+version = "0.11"
+
+[profile.dev]
+panic = "abort"
+opt-level = 0
+
+[profile.release]
+panic = "abort"
+lto = true
+opt-level = 3
+codegen-units = 1
+
+[profile.test]
+panic = "abort"
