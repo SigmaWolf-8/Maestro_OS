@@ -1,0 +1,9 @@
+[package]
+name = "salvi-kernel"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+spin = "0.9"
+volatile = "0.5"
+x86_64 = "0.14"
